@@ -112,6 +112,31 @@ module.exports = {
     }
   },
 
+  categoriListPage: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const items = await Category.find({ _id: id })
+        .select("_id name")
+        .populate({
+          path: "itemId",
+          select: "_id title country city isPopular  imageId",
+          perDocumentLimit: 4,
+          option: { sort: { sumBooking: -1 } },
+          populate: {
+            path: "imageId",
+            select: "_id imageUrl",
+            perDocumentLimit: 1,
+          },
+        });
+
+      res.status(200).json({
+        items,
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  },
+
   detailPage: async (req, res) => {
     try {
       const { id } = req.params;
