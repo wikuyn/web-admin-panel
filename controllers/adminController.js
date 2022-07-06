@@ -253,7 +253,7 @@ module.exports = {
 
   addItem: async (req, res) => {
     try {
-      const { categoryId, title, price, city, about } = req.body;
+      const { categoryId, title, price, city, about, type } = req.body;
       if (req.files.length > 0) {
         const category = await Category.findOne({ _id: categoryId });
         const newItem = {
@@ -324,6 +324,7 @@ module.exports = {
         alert,
         item,
         category,
+        type,
         action: "edit",
         user: req.session.user,
       });
@@ -337,7 +338,7 @@ module.exports = {
   editItem: async (req, res) => {
     try {
       const { id } = req.params;
-      const { categoryId, title, price, city, about } = req.body;
+      const { categoryId, title, price, city, about, type } = req.body;
       const item = await Item.findOne({ _id: id })
         .populate({ path: "imageId", select: "id imageUrl" })
         .populate({ path: "categoryId", select: "id name" });
@@ -354,6 +355,7 @@ module.exports = {
         item.city = city;
         item.description = about;
         item.categoryId = categoryId;
+        item.type = type;
         await item.save();
         req.flash("alertMessage", "Success update Item");
         req.flash("alertStatus", "success");
@@ -362,6 +364,7 @@ module.exports = {
         item.title = title;
         item.price = price;
         item.city = city;
+        item.type = type;
         item.description = about;
         item.categoryId = categoryId;
         await item.save();
