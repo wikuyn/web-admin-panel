@@ -262,6 +262,7 @@ module.exports = {
           description: about,
           price,
           city,
+          type,
         };
         const item = await Item.create(newItem);
         category.itemId.push({ _id: item._id });

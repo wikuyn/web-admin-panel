@@ -10,6 +10,10 @@ const itemSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  type: {
+    type: String,
+    required: true,
+  },
   country: {
     type: String,
     default: "Indonesia",
