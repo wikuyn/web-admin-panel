@@ -324,7 +324,6 @@ module.exports = {
         alert,
         item,
         category,
-        type,
         action: "edit",
         user: req.session.user,
       });
